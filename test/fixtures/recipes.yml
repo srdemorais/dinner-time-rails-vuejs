@@ -1,11 +1,55 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+sugar_cookies:
+  title: "Sugar Cookies"
+  cook_time: 15
+  prep_time: 20
+  ingredients: ["1 cup sugar", "2 cups flour", "1 egg", "1 tsp vanilla"]
+  ratings: 4.5
+  cuisine: "Dessert"
+  category: "Cookies"
+  author: "Cookie Monster"
+  image: "https://placehold.co/400x300/F0F8FF/000000?text=Sugar+Cookies"
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+flour_tortillas:
+  title: "Flour Tortillas"
+  cook_time: 10
+  prep_time: 10
+  ingredients: ["2 cups all-purpose flour", "1/2 cup water", "1/2 tsp salt"]
+  ratings: 4.2
+  cuisine: "Mexican"
+  category: "Bread"
+  author: "Maria"
+  image: "https://placehold.co/400x300/F0F8FF/000000?text=Flour+Tortillas"
+
+egg_scramble:
+  title: "Egg Scramble"
+  cook_time: 5
+  prep_time: 2
+  ingredients: ["3 eggs", "1 tbsp milk", "salt", "pepper"]
+  ratings: 3.9
+  cuisine: "Breakfast"
+  category: "Eggs"
+  author: "Chef John"
+  image: "https://placehold.co/400x300/F0F8FF/000000?text=Egg+Scramble"
+
+vanilla_cake:
+  title: "Vanilla Cake"
+  cook_time: 30
+  prep_time: 15
+  ingredients: ["1 cup flour", "1 cup sugar", "2 eggs", "1 tsp vanilla extract", "1/2 cup milk"]
+  ratings: 4.8
+  cuisine: "Dessert"
+  category: "Cake"
+  author: "Betty Baker"
+  image: "https://placehold.co/400x300/F0F8FF/000000?text=Vanilla+Cake"
+
+# Add an empty_recipe fixture to use for tests expecting no match, if needed
+empty_recipe:
+  title: "Empty Test Recipe"
+  cook_time: 0
+  prep_time: 0
+  ingredients: []
+  ratings: 0.0
+  cuisine: ""
+  category: ""
+  author: ""
+  image: ""
