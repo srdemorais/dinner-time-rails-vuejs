@@ -11,21 +11,30 @@
       <button @click="searchRecipes">Find Recipes</button>
     </div>
 
+    <div v-if="!searched && !loading && recipes.length === 0" class="initial-guidance">
+      Enter some ingredients (e.g., "chicken, rice") to find recipes!
+    </div>
+
     <div v-if="loading" class="loading-message">
       Loading recipes...
     </div>
 
-    <div v-if="recipes.length > 0" class="recipe-list">
-      <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+    <div v-if="error" class="error-message">
+      {{ error }}
     </div>
-    <div v-else-if="!loading && searched" class="no-results-message">
+
+    <div v-if="recipes.length > 0" class="recipe-list">
+      <RecipeCard v-for="recipe in recipes" :key="recipe.id || recipe.title" :recipe="recipe" />
+    </div>
+    <div v-else-if="!loading && searched && !error" class="no-results-message">
       No recipes found with those ingredients. Try different ones!
     </div>
   </div>
 </template>
 
 <script>
-import RecipeCard from './RecipeCard.vue'; // We will create this next
+import RecipeCard from './RecipeCard.vue';
+import axios from 'axios'; // Import axios
 
 export default {
   name: 'RecipeSearch',
@@ -37,27 +46,30 @@ export default {
       ingredientInput: '',
       recipes: [],
       loading: false,
-      searched: false // To show "No recipes found" only after a search attempt
+      searched: false,
+      error: null // To store any API error messages
     };
   },
   methods: {
-    searchRecipes() {
-      // API call logic will go here in the next step
+    async searchRecipes() { // Make this method async
       this.loading = true;
       this.searched = true;
-      // Simulate API call for now
-      setTimeout(() => {
-        this.recipes = []; // Clear previous results
+      this.error = null; // Clear previous errors
+
+      try {
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/recipes`, {
+          params: {
+            ingredients: this.ingredientInput // Send ingredientInput as 'ingredients' query parameter
+          }
+        });
+        this.recipes = response.data; // Assign the fetched data to recipes
+      } catch (err) {
+        console.error('Error fetching recipes:', err);
+        this.error = 'Failed to fetch recipes. Please try again later.';
+        this.recipes = []; // Clear recipes on error
+      } finally {
         this.loading = false;
-        console.log('Searching for:', this.ingredientInput);
-        // Example: If 'test' is in input, show dummy data
-        if (this.ingredientInput.toLowerCase().includes('test')) {
-            this.recipes = [
-                { id: 1, title: 'Test Chicken Dish', ingredients: ['chicken', 'test ingredient'], instructions: 'Cook it', image: 'https://via.placeholder.com/150' },
-                { id: 2, title: 'Test Veggie Meal', ingredients: ['broccoli', 'test ingredient'], instructions: 'Bake it', image: 'https://via.placeholder.com/150' }
-            ];
-        }
-      }, 1000);
+      }
     }
   }
 };
@@ -106,5 +118,17 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   margin-top: 20px;
+}
+
+.error-message {
+  margin-top: 20px;
+  color: #d32f2f; /* Red color for errors */
+  font-weight: bold;
+}
+
+.initial-guidance {
+  margin-top: 20px;
+  color: #888;
+  font-style: italic;
 }
 </style>

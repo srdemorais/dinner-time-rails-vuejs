@@ -1,6 +1,6 @@
 <template>
   <div class="recipe-card">
-    <img :src="recipe.image || 'https://via.placeholder.com/150'" :alt="recipe.title" class="recipe-image" />
+    <img :src="recipe.image + '&w=300&h=200&c=sc&q=80'|| 'https://via.placeholder.com/150'" :alt="recipe.title" class="recipe-image" />
     <h3>{{ recipe.title }}</h3>
     <p class="recipe-times" v-if="recipe.prep_time || recipe.cook_time">
       <span v-if="recipe.prep_time">Prep: {{ recipe.prep_time }}</span>
@@ -24,7 +24,7 @@
         {{ showAllInstructions ? 'Show Less' : 'Show More' }}
       </button>
     </div>
-    <p v-if="recipe.ratings" class="recipe-ratings">⭐ {{ recipe.ratings.toFixed(1) }}</p>
+    <p v-if="recipe.ratings" class="recipe-ratings">⭐ {{ parseFloat(recipe.ratings).toFixed(1) }}</p>
     <a :href="recipe.original_url" target="_blank" rel="noopener noreferrer" class="view-original-link" v-if="recipe.original_url">
       View Original Recipe
     </a>
