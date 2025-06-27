@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-
-  resources :recipes, only: [:index] do
-    collection do
-      get 'search' # Creates /recipes/search
+  
+  namespace :api do
+    namespace :v1 do
+      resources :recipes, only: [:index, :show] do
+        # add custom actions here later if needed, e.g.,
+        # collection do
+        #   get :search
+        # end
+      end
     end
   end
 end
