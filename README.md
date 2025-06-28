@@ -80,3 +80,48 @@ locally before your debrief interview.
 That probably means you're applying for a managerial position, so it's fine to
 pick another language of your choice to perform this task.
 </details>
+
+## Application URL
+- [Online application](https://recipe-frontend-vqn1.onrender.com/)
+- [Backend api](https://srdemorais-recipe-api.onrender.com/api/v1) (e.g. curl -v "https://srdemorais-recipe-api.onrender.com/api/v1/recipes?ingredients=chicken,rice")
+
+## User Stories
+
+To address the problem statement and deliver a functional prototype, the following user stories guided the development process:
+
+### 1. Backend API Development (Recipe Data Retrieval)
+
+**As a frontend application (or an API consumer),**
+**I want to be able to query the backend for recipes based on a list of provided ingredients,**
+**so that I can efficiently retrieve relevant recipe data without complex client-side processing.**
+
+* **Acceptance Criteria:**
+    * The API accepts a list of ingredients (e.g., as a query parameter).
+    * The API returns a JSON list of recipes that can be prepared with the provided ingredients.
+    * The API response includes essential recipe details (e.g., title, description, ingredients list, instructions, and source URL if available).
+    * The API is performant enough to respond within a reasonable time frame.
+
+### 2. Frontend Development (User Recipe Search Experience)
+
+**As a home cook,**
+**I want an intuitive interface where I can easily input the ingredients I have at home and view a clear list of suitable recipes,**
+**so that I can quickly decide what to cook and minimize food waste or manual searching.**
+
+* **Acceptance Criteria:**
+    * The interface provides a clear input field for ingredients.
+    * Users can easily submit their ingredients to trigger a search.
+    * Search results are displayed in a readable format, showing recipe titles and potentially key details.
+    * Clicking on a recipe navigates to its full details (if applicable) or a link to the original source.
+    * The UI handles cases with no matching recipes gracefully.
+
+### 3. Application Deployment (Online Accessibility)
+
+**As a user (or project stakeholder),**
+**I want the recipe finder application to be accessible online via a stable URL,**
+**so that I can use it anytime, anywhere, without needing a local setup, and demonstrate its functionality easily.**
+
+* **Acceptance Criteria:**
+    * Both the backend API and frontend application are deployed and publicly accessible.
+    * The frontend can successfully make API requests to the deployed backend.
+    * The application functions as expected (recipes can be searched and retrieved) when accessed through the public URL.
+    * The deployment process is documented (implicitly, by the successful `README` submission).
