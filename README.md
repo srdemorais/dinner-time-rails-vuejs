@@ -82,7 +82,7 @@ pick another language of your choice to perform this task.
 </details>
 
 ## Application URL
-- [Online application](https://recipe-frontend-vqn1.onrender.com/)
+- [Frontend application](https://recipe-frontend-vqn1.onrender.com/)
 - [Backend api](https://srdemorais-recipe-api.onrender.com/api/v1) (e.g. curl -v "https://srdemorais-recipe-api.onrender.com/api/v1/recipes?ingredients=chicken,rice")
 
 ## User Stories
@@ -111,7 +111,7 @@ To address the problem statement and deliver a functional prototype, the followi
     * The interface provides a clear input field for ingredients.
     * Users can easily submit their ingredients to trigger a search.
     * Search results are displayed in a readable format, showing recipe titles and potentially key details.
-    * Clicking on a recipe navigates to its full details (if applicable) or a link to the original source.
+    * Clicking on a recipe navigates to its full details (if applicable).
     * The UI handles cases with no matching recipes gracefully.
 
 ### 3. Application Deployment (Online Accessibility)
