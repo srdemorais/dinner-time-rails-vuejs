@@ -6,10 +6,10 @@
         <input
           type="text"
           v-model="ingredientInput"
-          @keyup.enter="searchRecipes"
+          @keyup.enter="searchRecipes()"
           placeholder="e.g., chicken, rice, onion"
         />
-        <button @click="searchRecipes">Find Recipes</button>
+        <button @click="searchRecipes()">Find Recipes</button>
       </div>
 
       <div v-if="!searched && !loading && recipes.length === 0" class="initial-guidance">
@@ -30,6 +30,12 @@
       <div v-else-if="!loading && searched && !error" class="no-results-message">
         No recipes found with those ingredients. Try different ones!
       </div>
+
+      <div v-if="totalPages > 1 && !loading" class="pagination-controls">
+        <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -49,28 +55,45 @@ export default {
       recipes: [],
       loading: false,
       searched: false,
-      error: null // To store any API error messages
+      error: null,         // To store any API error messages
+      currentPage: 1,      // Current page number
+      totalPages: 0,       // Total number of pages
+      perPage: 10          // Items per page (matches backend default)
     };
   },
   methods: {
-    async searchRecipes() { // Make this method async
+    async searchRecipes(page = 1) { // Accept page number, default to 1
       this.loading = true;
       this.searched = true;
       this.error = null; // Clear previous errors
+      this.currentPage = page; // Set current page for display and next request
 
       try {
         const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/recipes`, {
           params: {
-            ingredients: this.ingredientInput // Send ingredientInput as 'ingredients' query parameter
+            ingredients: this.ingredientInput, // Send ingredientInput as 'ingredients' query parameter
+            page: this.currentPage,            // Send current page
+            per_page: this.perPage             // Send items per page
           }
         });
-        this.recipes = response.data; // Assign the fetched data to recipes
+
+        // Update recipes and pagination data from the API response
+        this.recipes = response.data.recipes;
+        this.totalPages = response.data.pagination.total_pages;
+
       } catch (err) {
         console.error('Error fetching recipes:', err);
         this.error = 'Failed to fetch recipes. Please try again later.';
         this.recipes = []; // Clear recipes on error
+        this.totalPages = 0; // Reset total pages on error
       } finally {
         this.loading = false;
+      }
+    },
+    goToPage(page) {
+      // Prevent going out of bounds
+      if (page >= 1 && page <= this.totalPages) {
+        this.searchRecipes(page); // Fetch recipes for the new page
       }
     }
   }
@@ -191,4 +214,38 @@ h2 {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.pagination-controls button {
+  padding: 0.6rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination-controls span {
+  font-size: 1rem;
+  color: #333;
+}
+
 </style>
