@@ -30,3 +30,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Rails specific log files
+/recipe_api/log/*.log
+
+# Rails temporary files and caches
+/recipe_api/tmp/

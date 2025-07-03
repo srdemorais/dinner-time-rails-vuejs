@@ -1,12 +1,7 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+
 require 'json' # Required for JSON parsing
 
 # Path to your JSON data file
@@ -30,18 +25,4 @@ if File.exist?(json_file_path)
 else
   puts "Warning: db/recipes.json not found. No recipes seeded from JSON."
   puts "Please create 'db/recipes.json' with your recipe data, or add recipes manually."
-
-  # Fallback: You can keep some manual entries here if the JSON file isn't present
-  # For example:
-  Recipe.create!(
-    title: "Fallback Recipe",
-    cook_time: 20,
-    prep_time: 5,
-    ingredients: ["water", "salt"],
-    ratings: 3.0,
-    cuisine: "",
-    category: "Basic",
-    author: "System",
-    image: "https://placehold.co/400x300/CCCCCC/000000?text=Fallback"
-  )
 end
